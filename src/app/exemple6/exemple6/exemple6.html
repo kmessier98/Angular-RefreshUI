@@ -1,18 +1,19 @@
-<h1>Exemple <b>sans service HTTP</b>-- UI REFRESH</h1>
+<h1>Exemple <b>Observable</b>-- UI REFRESH</h1>
+<h2 class="good">Bonne facon de faire pour temps réel</h2>
 
 @if (messages.length == 0) {
-    <h2>Aucun message</h2>
+<h2>Aucun message</h2>
 }
 @else {
-    <h2>Messages</h2>
-    <ul>
-        @for (message of messages; track message) {
-            <div>
-                <li>{{ message.content }}</li>
-                <button (click)="removeMessage(message.id ?? '')">Supprimer</button>
-            </div>
-        }
-    </ul>
+<h2>Messages</h2>
+<ul>
+    @for (message of messages; track message) {
+    <div>
+        <li>{{ message.content }}</li>
+        <button (click)="removeMessage(message.id ?? '')">Supprimer</button>
+    </div>
+    }
+</ul>
 }
 
 <input type="text" [(ngModel)]="newMessage" placeholder="Nouveau message" (keyup.enter)="addMessage()" />

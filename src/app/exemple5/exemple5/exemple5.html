@@ -1,12 +1,19 @@
-<h1>Exemple avec <b>Observable</b> -- UI REFRESH</h1>
+<h1>Exemple avec <b>observable en utilisant variable observable, local</b> -- UI REFRESH</h1>
+<h2 class="problem">Cette version fonctionne pour afficher les infos dans le get. Or, le temps réel ne fonctionne pas
+    (Le create et le delete ne refresh pas l'ui par la suite). Donc, pour simplement afficher les données d'un HTTPGET,
+    cette approche ici fonctione !!! En utilsiant lobservable avec | async, pas besoin de
+    Ondestroy, car ca le fais tout seul.
+    Ca marche juste pas quand on veut faire du temps réel (ajout / suppression puis réaffiche les infos
+    correctement). Voir Exemple6 afin de pouvoir faire du temps réel
+</h2>
 
-@if (messages.length == 0) {
+@if ((messages$ | async)?.length == 0) {
 <h2>Aucun message</h2>
 }
 @else {
 <h2>Messages</h2>
 <ul>
-    @for (message of messages; track message) {
+    @for (message of messages$ | async; track message) {
     <div>
         <li>{{ message.content }}</li>
         <button (click)="removeMessage(message.id ?? '')">Supprimer</button>

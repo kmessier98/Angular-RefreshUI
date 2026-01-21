@@ -1,18 +1,25 @@
-<h1>Exemple avec <b>Subscription</b> -- UI REFRESH</h1>
+<h1>Exemple avec <b>Observable en utilisant variable normal, local</b> -- UI REFRESH</h1>
+<h2 class="problem">Probleme majeur avec cette version: Depuis angular 17+, le subribe n'est plus suffisant pour
+    déclencher le refresh du UI. Dans la version zoneless (celle actuelle), il faut utiliser les signals ou bien
+    utilisé une variable observable et dans le UI, faire | async (voir Exemple5). Avant Angular 17, le subscribe
+    déclenchait automatiquement le
+    refresh du UI. C'est aussi possible d'utiliser zone.js pour refresh ui. ChangeDetectorRef (ex2) marche mal avec des
+    observable
+</h2>
 
 @if (messages.length == 0) {
-    <h2>Aucun message</h2>
+<h2>Aucun message</h2>
 }
 @else {
-    <h2>Messages</h2>
-    <ul>
-        @for (message of messages; track message) {
-            <div>
-                <li>{{ message.content }}</li>
-                <button (click)="removeMessage(message.id ?? '')">Supprimer</button>
-            </div>
-        }
-    </ul>
+<h2>Messages</h2>
+<ul>
+    @for (message of messages; track message) {
+    <div>
+        <li>{{ message.content }}</li>
+        <button (click)="removeMessage(message.id ?? '')">Supprimer</button>
+    </div>
+    }
+</ul>
 }
 
 <input type="text" [(ngModel)]="newMessage" placeholder="Nouveau message" (keyup.enter)="addMessage()" />

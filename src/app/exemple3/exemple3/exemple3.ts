@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { Service3 } from '../service3';
 import { MessageDto } from '../../dtos/message.dto';
 import { FormsModule } from '@angular/forms';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-exemple3',
@@ -9,21 +10,31 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './exemple3.html',
   styleUrl: './exemple3.scss',
 })
-export class Exemple3 {
-  newMessage: string = "";
-  messages: MessageDto[] = [];
+export class Exemple3 implements OnInit {
+  newMessage: string = '';
+  messages = signal(<MessageDto[]>[]);
 
   constructor(private service: Service3) {}
 
-  addMessage() {
+  async ngOnInit() {
+    await this.getMessages();
+  }
+
+  async getMessages() {
+    const msg = await firstValueFrom(this.service.getMessages());
+    this.messages.set(msg);
+  }
+
+  async addMessage() {
     if (this.newMessage.trim().length > 0) {
-      const id = (Math.random() * 1000000).toFixed(0);
-      this.messages.push(({ id: id, content: this.newMessage.trim() }));
-      this.newMessage = "";
+      await firstValueFrom(this.service.addMessage({ content: this.newMessage.trim() }));
+      await this.getMessages();
+      this.newMessage = '';
     }
   }
 
-  removeMessage(id: string) {
-    this.messages = this.messages.filter(msg => msg.id !== id);
+  async removeMessage(id: string) {
+    await firstValueFrom(this.service.deleteMessage(id));
+    await this.getMessages();
   }
 }

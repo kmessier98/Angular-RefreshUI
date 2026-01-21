@@ -1,12 +1,16 @@
 <h1>Exemple avec <b>Signal</b> -- UI REFRESH</h1>
+<h2 class="problem">Probleme majeur avec cette version: le signal n'est pas tres utilisé vu que c'est récent. Et il
+    aurait fallu j'utilise l'observable .subcribe((msg) this.messages.set(msg)) au lieu de .topromise, mais pas grave,
+    signal nest pas tres utilisé.
+</h2>
 
-@if (messages.length == 0) {
+@if (messages().length == 0) {
 <h2>Aucun message</h2>
 }
 @else {
 <h2>Messages</h2>
 <ul>
-    @for (message of messages; track message) {
+    @for (message of messages(); track message) {
     <div>
         <li>{{ message.content }}</li>
         <button (click)="removeMessage(message.id ?? '')">Supprimer</button>

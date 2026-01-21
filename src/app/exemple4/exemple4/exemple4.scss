@@ -5,7 +5,7 @@ h1 {
   margin-bottom: 20px;
 }
 
-l {
+ul {
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -19,4 +19,8 @@ l {
     width: 950px;
     color: white;
   }
+}
+.problem {
+  color: red;
+  font-weight: bold;
 }

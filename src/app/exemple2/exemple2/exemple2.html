@@ -1,18 +1,21 @@
 <h1>Exemple avec <b>Promise</b> -- UI REFRESH</h1>
+<h2 class="problem">Probleme majeur avec cette version: on transforme tous les observable en promises.
+    Pas une bonne pratique de transformer en promise.
+</h2>
 
 @if (messages.length == 0) {
-    <h2>Aucun message</h2>
+<h2>Aucun message</h2>
 }
 @else {
-    <h2>Messages</h2>
-    <ul>
-        @for (message of messages; track message) {
-            <div>
-                <li>{{ message.content }}</li>
-                <button (click)="removeMessage(message.id ?? '')">Supprimer</button>
-            </div>
-        }
-    </ul>
+<h2>Messages</h2>
+<ul>
+    @for (message of messages; track message) {
+    <div>
+        <li>{{ message.content }}</li>
+        <button (click)="removeMessage(message.id ?? '')">Supprimer</button>
+    </div>
+    }
+</ul>
 }
 
 <input type="text" [(ngModel)]="newMessage" placeholder="Nouveau message" (keyup.enter)="addMessage()" />
